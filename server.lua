@@ -51,7 +51,12 @@ RegisterServerEvent(
         local xPlayer = QBCore.Functions.GetPlayer(source)
         local Crypto = xPlayer.PlayerData.money.crypto
 
-        item_data = items[itemname]
+        item_data = nil
+        for i = 1, #items do
+            if items[i].name == itemname then
+                item_data = items[i]
+            end
+        end
         item_price = item_data.price
         if Crypto >= item_price then
             xPlayer.Functions.RemoveMoney("crypto", item_price)
