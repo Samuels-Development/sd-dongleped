@@ -18,142 +18,126 @@ Citizen.CreateThread(function()
    	end	
 end)
 
-function checkstatus ()
-    local context = {
-        {
-            id = 1,
-            header = "Robberies Status",
-            txt = "",
-            params = {
-                event = ""
-            }
-        },
-    }
+RegisterNetEvent('sd-dongle:activity', function(data)
     QBCore.Functions.TriggerCallback('sd-check:activity', function(data)
         if data then
-                table.insert(context, {
-                    id = 2,
-                    header = "Jeweler",
+            exports['qb-menu']:openMenu({
+                {
+                    
+                    header = "💁 Robberies Status 💁",
+                    isMenuHeader = true, -- Set to true to make a nonclickable title
+                },
+                {
+                    
+                    header = "Vangelico",
                     txt = data.jeweler,
                     params = {
-                        event = "",
-                        args = ""
-                    },
-                })
-                table.insert(context, {
-                    id = 4,
-                    header = "Fleeca: Great Ocean",
-                    txt = data.greatocean,
-                    params = {
-                        event = "",
-                        args = ""
-                    },
-                })
-                table.insert(context, {
-                    id = 5,
-                    header = "Fleeca: Harmony",
-                    txt = data.harmony,
-                    params = {
-                        event = "",
-                        args = ""
-                    },
-                })
-                table.insert(context, {
-                    id = 6,
+                        event = ""
+                    }
+                },
+                {
+                    
                     header = "Paleto Bank",
                     txt = data.paleto,
                     params = {
-                        event = "",
-                        args = ""
-                    },
-                })
-                table.insert(context, {
-                    id = 7,
+                        event = ""
+                    }
+                },
+                {
+                    
                     header = "Pacific Bank",
                     txt = data.uppervault,
                     params = {
-                        event = "",
-                        args = ""
-                    },
-                })
-            end
+                        event = ""
+                    }
+                },
+                {
+                    
+                    header = "Fleeca: Harmony",
+                    txt = data.harmony,
+                    params = {
+                        event = ""
+                    }
+                },
+                {
+                    
+                    header = "Fleeca: Great Ocean",
+                    txt = data.greatocean,
+                    params = {
+                        event = ""
+                    }
+                },
+                {
+                    header = "Close (ESC)",
+                    isMenuHeader = true, -- Set to true to make a nonclickable title
+                },
+            })
+        end
     end)
-    Wait(100)
-    TriggerEvent('qb-menu:client:openMenu', context)
-end
-
-function buyitems ()
-    local context1 = {
-        {
-            id = 1,
-            header = "💥 Practice Makes Perfect! 💥",
-            txt = "",
-            params = {
-                event = ""
-            }
-        },
-    }
-        table.insert(context1, {
-            id = 2,
-            header = "Electronic Kit (100SHUNG)",
-            txt = "An electronic kit, specified for use on Fleeca Security Systems",
-            params = {
-            event = "itemverclientside",
-            args = "electronickit"
-        },
-        })
-        table.insert(context1, {
-            id = 3,
-            header = "Gate Cracker (250SHUNG)",
-            txt = "Used to disable security locks on doors & gates",
-            params = {
-            event = "itemverclientside",
-            args = "gatecrack"
-        },
-        })
-        table.insert(context1, {
-            id = 4,
-            header = "Thermite (500SHUNG)",
-            txt = "A low-yield thermite charge used to breach gates in the pacific bank",
-            params = {
-            event = "itemverclientside",
-            args = "thermite"
-        },
-        })
-        table.insert(context1, {
-            id = 5,
-            header = "Trojan USB (500SHUNG)",
-            txt = "A USB infected with malware",
-            params = {
-            event = "itemverclientside",
-            args = "trojan_usb"
-        },
-        })
-        table.insert(context1, {
-            id = 6,
-            header = "Golden Tipped Drill (100SHUNG)",
-            txt = "A specialized drill, used to crack highly armoured security deposit boxes",
-            params = {
-            event = "itemverclientside",
-            args = "drill"
-        },
-        })
-    Wait(100)
-    TriggerEvent('qb-menu:client:openMenu', context1)
-end
-
-RegisterNetEvent("itemverclientside", function (itemname)
-TriggerServerEvent("itemverserverside", itemname)
 end)
 
-AddEventHandler('chechkeventtarget', function(data)
-    Wait(200)
-    checkstatus()
-end)
+RegisterNetEvent('sd-dongle:buyitems', function(data)
+            exports['qb-menu']:openMenu({
+                {
+                    
+                    header = "💥 Practice Makes Perfect! 💥",
+                    isMenuHeader = true, -- Set to true to make a nonclickable title
+                },
+                {
+                    
+                    header = "Electronic Kit (100SHUNG)",
+                    txt = "An electronic kit, specified for use on Fleeca Security Systems",
+                    params = {
+                    event = "sd-dongle:client:itemcheck",
+                    args = "electronickit"
+                    }
+                },
+                {
+                    
+                    header = "Gate Cracker (250SHUNG)",
+                    txt = "Used to disable security locks on doors & gates",
+                    params = {
+                    event = "sd-dongle:client:itemcheck",
+                    args = "gatecrack"
+                    }
+                },
+                {
+                    
+                    id = 4,
+                    header = "Thermite (500SHUNG)",
+                    txt = "A low-yield thermite charge used to breach gates in the pacific bank",
+                    params = {
+                    event = "sd-dongle:client:itemcheck",
+                    args = "thermite"
+                    }
+                },
+                {
+                    
+                    header = "Trojan USB (500SHUNG)",
+                    txt = "A USB infected with malware",
+                    params = {
+                    event = "sd-dongle:client:itemcheck",
+                    args = "trojan_usb"
+                    }
+                },
+                {
+                    
+                    header = "Golden Tipped Drill (100SHUNG)",
+                    txt = "A specialized drill, used to crack highly armoured security deposit boxes",
+                    params = {
+                    event = "sd-dongle:client:itemcheck",
+                    args = "drill"
+                    }
+                },
+                {
+                    header = "Close (ESC)",
+                    isMenuHeader = true, -- Set to true to make a nonclickable title
+                },
+            })
+    end)
 
-AddEventHandler('buyitemsseventtarget', function(data)
-    Wait(200)
-    buyitems()
+RegisterNetEvent("sd-dongle:client:itemcheck", function (itemname)
+TriggerServerEvent("sd-dongle:server:itemcheck", itemname)
 end)
 
 -- Ped Creation
@@ -193,14 +177,14 @@ CreateThread(function()
         options = {
             { 
                 type = "client",
-                event = "chechkeventtarget",
+                event = "sd-dongle:activity",
                 icon = "fas fa-clock",
                 label = "Check Availability",
                 job = "all",
             },
             {
                 type = "client",
-                event = "buyitemsseventtarget",
+                event = "sd-dongle:buyitems",
                 icon = "fas fa-laptop-code",
                 label = "Purchase Equıpment",
                 job = "all",
@@ -210,3 +194,4 @@ CreateThread(function()
     })
 
 end)
+
