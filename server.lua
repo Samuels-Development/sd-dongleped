@@ -2,12 +2,12 @@ local QBCore = exports["qb-core"]:GetCoreObject()
 
 local data = {
     ["jeweler"] = "Available",
-    ["mazebank"] = "Available",
     ["greatocean"] = "Available",
     ["harmony"] = "Available",
     ["paleto"] = "Available",
     ["uppervault"] = "Available"
 }
+
 local items = {
     {
         ["name"] = "electronickit",
@@ -46,7 +46,7 @@ RegisterServerEvent(
 )
 
 RegisterServerEvent(
-    "itemverserverside",
+    "sd-dongle:server:itemcheck",
     function(itemname)
         local xPlayer = QBCore.Functions.GetPlayer(source)
         local Crypto = xPlayer.PlayerData.money.crypto
@@ -63,7 +63,7 @@ RegisterServerEvent(
             xPlayer.Functions.AddItem(itemname, 1)
             TriggerClientEvent("inventory:client:ItemBox", source, QBCore.Shared.Items[itemname], "add")
         else
-            TriggerClientEvent("QBCore:Notify", source, "You don't have " .. item_price .. " cryptos", "error")
+            TriggerClientEvent("QBCore:Notify", source, "You don't have " .. item_price .. " Qbits", "error")
         end
     end
 )
