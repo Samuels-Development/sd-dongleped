@@ -1,69 +1,16 @@
 local QBCore = exports["qb-core"]:GetCoreObject()
 
-local data = {
-    ["jeweler"] = "Available",
-    ["greatocean"] = "Available",
-    ["harmony"] = "Available",
-    ["paleto"] = "Available",
-    ["uppervault"] = "Available"
-}
+RegisterNetEvent('sd-dongle:server:buyshit', function(ped)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    if not src or not Player or not ped then return end
+    local cash = Player.PlayerData.money[Config.Shop[ped].type]
 
-local items = {
-    {
-        ["name"] = "electronickit",
-        ["price"] = 100
-    },
-    {
-        ["name"] = "gatecrack",
-        ["price"] = 250
-    },
-    {
-        ["name"] = "thermite",
-        ["price"] = 500
-    },
-    {
-        ["name"] = "trojan_usb",
-        ["price"] = 500
-    },
-    {
-        ["name"] = "drill",
-        ["price"] = 100
-    }
-}
-
-QBCore.Functions.CreateCallback(
-    "sd-check:activity",
-    function(source, cb)
-        cb(data)
+    if cash >= Config.Shop[ped].price then
+        Player.Functions.RemoveMoney(Config.Shop[ped].type, Config.Shop[ped].price)
+        Player.Functions.AddItem(Config.Shop[ped].item, 1)
+        TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[Config.Shop[ped].item], "add")
+    else
+        TriggerClientEvent('QBCore:Notify', src, 'Not enough '..Config.Shop[ped].type, 'error')
     end
-)
-
-RegisterServerEvent(
-    "server-update",
-    function(gelendata, textdata)
-        data[gelendata] = textdata
-    end
-)
-
-RegisterServerEvent(
-    "sd-dongle:server:itemcheck",
-    function(itemname)
-        local xPlayer = QBCore.Functions.GetPlayer(source)
-        local Crypto = xPlayer.PlayerData.money.crypto
-
-        item_data = nil
-        for i = 1, #items do
-            if items[i].name == itemname then
-                item_data = items[i]
-            end
-        end
-        item_price = item_data.price
-        if Crypto >= item_price then
-            xPlayer.Functions.RemoveMoney("crypto", item_price)
-            xPlayer.Functions.AddItem(itemname, 1)
-            TriggerClientEvent("inventory:client:ItemBox", source, QBCore.Shared.Items[itemname], "add")
-        else
-            TriggerClientEvent("QBCore:Notify", source, "You don't have " .. item_price .. " Qbits", "error")
-        end
-    end
-)
+end)
