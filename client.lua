@@ -18,127 +18,86 @@ Citizen.CreateThread(function()
    	end	
 end)
 
-RegisterNetEvent('sd-dongle:activity', function(data)
-    QBCore.Functions.TriggerCallback('sd-check:activity', function(data)
-        if data then
-            exports['qb-menu']:openMenu({
+RegisterNetEvent('sd-dongle:activity', function()
+            local header = {
                 {
-                    
-                    header = "💁 Robberies Status 💁",
-                    isMenuHeader = true, -- Set to true to make a nonclickable title
-                },
-                {
-                    
-                    header = "Vangelico",
-                    txt = data.jeweler,
-                    params = {
-                        event = ""
+                    isMenuHeader = true,
+                    icon = "fa-solid fa-circle-info",
+                    header = "💁 Available Robberies 💁",
+                }
+            }
+            for k, v in pairs(Config.RobberyList) do
+                if CurrentCops >= v.minCops then
+                    if not v.bank or (v.bank and not BankRobberyCD) then
+                        header[#header+1] = {
+                            header = v.Header,
+                            txt = "✔️ Available",
+                            icon = v.icon,
+                            isMenuHeader = true,
+                        }
+                    else
+                        header[#header+1] = {
+                            header = v.Header,
+                            txt = "❌ Not Available",
+                            icon = v.icon,
+                            isMenuHeader = true,
+                        }
+                    end
+                else
+                    header[#header+1] = {
+                        header = v.Header,
+                        txt = "Not Available",
+                        icon = v.icon,
+                        isMenuHeader = true,
                     }
-                },
-                {
-                    
-                    header = "Paleto Bank",
-                    txt = data.paleto,
-                    params = {
-                        event = ""
-                    }
-                },
-                {
-                    
-                    header = "Pacific Bank",
-                    txt = data.uppervault,
-                    params = {
-                        event = ""
-                    }
-                },
-                {
-                    
-                    header = "Fleeca: Harmony",
-                    txt = data.harmony,
-                    params = {
-                        event = ""
-                    }
-                },
-                {
-                    
-                    header = "Fleeca: Great Ocean",
-                    txt = data.greatocean,
-                    params = {
-                        event = ""
-                    }
-                },
-                {
-                    header = "Close (ESC)",
-                    isMenuHeader = true, -- Set to true to make a nonclickable title
-                },
-            })
-        end
-    end)
-end)
+                end
+            end
+            header[#header+1] = {
+                header = "Close (ESC)",
+                icon = "fa-solid fa-angle-left",
+                isMenuHeader = true,
+                params = {
+                    event = "",
+                }
+            }
+        
+            exports['qb-menu']:openMenu(header)
+        end)
 
 RegisterNetEvent('sd-dongle:buyitems', function(data)
-            exports['qb-menu']:openMenu({
-                {
-                    
-                    header = "💥 Practice Makes Perfect! 💥",
-                    isMenuHeader = true, -- Set to true to make a nonclickable title
-                },
-                {
-                    
-                    header = "Electronic Kit (100SHUNG)",
-                    txt = "An electronic kit, specified for use on Fleeca Security Systems",
-                    params = {
-                    event = "sd-dongle:client:itemcheck",
-                    args = "electronickit"
-                    }
-                },
-                {
-                    
-                    header = "Gate Cracker (250SHUNG)",
-                    txt = "Used to disable security locks on doors & gates",
-                    params = {
-                    event = "sd-dongle:client:itemcheck",
-                    args = "gatecrack"
-                    }
-                },
-                {
-                    
-                    id = 4,
-                    header = "Thermite (500SHUNG)",
-                    txt = "A low-yield thermite charge used to breach gates in the pacific bank",
-                    params = {
-                    event = "sd-dongle:client:itemcheck",
-                    args = "thermite"
-                    }
-                },
-                {
-                    
-                    header = "Trojan USB (500SHUNG)",
-                    txt = "A USB infected with malware",
-                    params = {
-                    event = "sd-dongle:client:itemcheck",
-                    args = "trojan_usb"
-                    }
-                },
-                {
-                    
-                    header = "Golden Tipped Drill (100SHUNG)",
-                    txt = "A specialized drill, used to crack highly armoured security deposit boxes",
-                    params = {
-                    event = "sd-dongle:client:itemcheck",
-                    args = "drill"
-                    }
-                },
-                {
-                    header = "Close (ESC)",
-                    isMenuHeader = true, -- Set to true to make a nonclickable title
-                },
-            })
-    end)
+    local header = {
+        {
+            isMenuHeader = true,
+            icon = "fa-solid fa-circle-info",
+            header = "💥 Practice Makes Perfect! 💥"
+        }
+    }
+    for k, v in pairs(Config.Shop) do
+        if QBCore.Shared.Items[v.item].label then
+            header[#header+1] = {
+                header = QBCore.Shared.Items[v.item].label,
+                txt = "Price: "..v.price,
+                icon = v.icon,
+                params = {
+                    isServer = true,
+                    event = "sd-dongle:server:buyshit",
+                    args = k
+                }
+            }
+        end
+    end
+    header[#header+1] = {
+        header = "Close (ESC)",
+        icon = "fa-solid fa-angle-left",
+        isMenuHeader = true,
+        params = {
+            event = "",
+        }
+    }
 
-RegisterNetEvent("sd-dongle:client:itemcheck", function (itemname)
-TriggerServerEvent("sd-dongle:server:itemcheck", itemname)
+    exports['qb-menu']:openMenu(header)
 end)
+
 
 -- Ped Creation
 
@@ -169,6 +128,18 @@ CreateThread(function()
     CreatePeds()
 end)
 
+-- Bank Robbery Triggers
+
+-- do something like when a TriggerClientEvent('sd-dongle:client:SetBankCD', -1, true) when a bank is being robbed
+-- do something like TriggerClientEvent('sd-dongle:client:SetBankCD', -1, false) when a bank can be hit again
+
+RegisterNetEvent('sd-dongle:client:SetBankCD', function(bool)
+    BankRobberyCD = bool
+end)
+
+RegisterNetEvent('police:SetCopCount', function(amount)
+    CurrentCops = amount
+end)
 
 -- Target Exports
 
