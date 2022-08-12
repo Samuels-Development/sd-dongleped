@@ -17,4 +17,8 @@ qb-core
 qb-target 
 qb-menu
 
+Zoo did a way better job so I used a lot of his code lol
+https://github.com/FjamZoo/qb-robberylist
+
+
 
