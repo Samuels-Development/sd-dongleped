@@ -23,50 +23,43 @@ Citizen.CreateThread(function()
 end)
 
 RegisterNetEvent('sd-dongle:activity', function()
-            local header = {
-                {
-                    isMenuHeader = true,
-                    icon = "fa-solid fa-circle-info",
-                    header = "💁 Available Robberies 💁",
-                }
-            }
-            for k, v in pairs(Config.RobberyList) do
-                if CurrentCops >= v.minCops then
-                    if not v.bank or (v.bank and not BankRobberyCD) then
-                        header[#header+1] = {
-                            header = v.Header,
-                            txt = "✔️ Available",
-                            icon = v.icon,
-                            isMenuHeader = true,
-                        }
-                    else
-                        header[#header+1] = {
-                            header = v.Header,
-                            txt = "❌ Not Available",
-                            icon = v.icon,
-                            isMenuHeader = true,
-                        }
-                    end
-                else
-                    header[#header+1] = {
-                        header = v.Header,
-                        txt = "Not Available",
-                        icon = v.icon,
-                        isMenuHeader = true,
-                    }
-                end
-            end
-            header[#header+1] = {
-                header = "Close (ESC)",
-                icon = "fa-solid fa-angle-left",
+    QBCore.Functions.TriggerCallback("sd-dongleped:server:getCops", function(enoughCops)
+        local header = {
+            {
                 isMenuHeader = true,
-                params = {
-                    event = "",
-                }
+                icon = "fa-solid fa-circle-info",
+                header = "💁 Available Robberies 💁",
             }
-        
-            exports['qb-menu']:openMenu(header)
-        end)
+        }
+        for k, v in pairs(Config.RobberyList) do
+            if enoughCops >= v.minCops then
+                header[#header+1] = {
+                    header = v.Header,
+                    txt = "✔️ Available",
+                    icon = v.icon,
+                    isMenuHeader = true,
+                }
+            else
+                header[#header+1] = {
+                    header = v.Header,
+                    txt = "❌ Not Available",
+                    icon = v.icon,
+                    isMenuHeader = true,
+                }
+            end
+        end
+        header[#header+1] = {
+            header = "Close (ESC)",
+            icon = "fa-solid fa-angle-left",
+            -- isMenuHeader = true,
+            params = {
+                event = "",
+            }
+        }
+
+        exports['qb-menu']:openMenu(header)
+    end)
+end)
 
 RegisterNetEvent('sd-dongle:buyitems', function(data)
     local header = {
