@@ -1,8 +1,4 @@
 local QBCore = exports['qb-core']:GetCoreObject()
-local CurrentCops = 0
-
-
-local BankRobberyCD = false
 
 -- Blip Creation
 
