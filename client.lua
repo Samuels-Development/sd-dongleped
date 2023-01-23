@@ -125,19 +125,6 @@ CreateThread(function()
     CreatePeds()
 end)
 
--- Bank Robbery Triggers
-
--- do something like when a TriggerClientEvent('sd-dongle:client:SetBankCD', -1, true) when a bank is being robbed
--- do something like TriggerClientEvent('sd-dongle:client:SetBankCD', -1, false) when a bank can be hit again
-
-RegisterNetEvent('sd-dongle:client:SetBankCD', function(bool)
-    BankRobberyCD = bool
-end)
-
-RegisterNetEvent('police:SetCopCount', function(amount)
-    CurrentCops = amount
-end)
-
 -- Target Exports
 
 CreateThread(function()
