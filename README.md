@@ -13,7 +13,7 @@ Please consider supporting ❤
 
 # Dependencies
 
-es_extended (1.3 and up) qb-core
+es_extended (1.3 and up) or qb-core,
 sd_lib
 
 
