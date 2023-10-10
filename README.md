@@ -14,7 +14,7 @@ Please consider supporting ❤
 # Dependencies
 
 es_extended (1.3 and up) or qb-core,
-sd_lib
+[sd_lib](https://fivem.samueldev.shop/package/5947240)
 
 
 
