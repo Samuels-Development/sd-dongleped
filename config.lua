@@ -15,7 +15,7 @@ Config.DonglePedModel = 'cs_old_man2' -- The model name of the boss ped.
 
 Config.DonglePedLocation = { -- The locations where the boss can spawn.
     [1] = vector4(-64.23, 77.13, 70.62, 66.73),
-   -- [2] = vector4(-274.91, 195.72, 85.6, 269.13),
+    [2] = vector4(-274.91, 195.72, 85.6, 269.13),
    -- [3] = vector4(683.48, -789.34, 23.5, 0.13)
 }
 
