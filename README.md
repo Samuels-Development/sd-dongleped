@@ -3,13 +3,15 @@
 
 Talk to a ped, to retrieve availability information about bank/misc robberies and buy items from him. Works for QBCore/ESX. ox_inventory is also supported.
 
+# IMPORANT
+sd_lib comes with exploit preventions that ensure otherwise vulnerable events/functions can only be triggered within the specific resource. If you're using this resource, then you WILL need to add 'sd-dongleped' to the sd_lib/sv_config.lua Secure.AllowedResources array.
+
 - [Preview](https://www.youtube.com/watch?v=9eyLQDqIBd4) (Severly Outdated)
 
 ![FiveM_b2699_GTAProcess_I26i2N0nmF](https://github.com/Samuels-Development/sd-dongleped/assets/99494967/e357e40f-3b15-4928-8f9b-7dfc5d651d22)
 ![FiveM_b2699_GTAProcess_Kho6aS4P2t](https://github.com/Samuels-Development/sd-dongleped/assets/99494967/94db876c-b145-4c42-927a-589c056900b9)
 ![FiveM_b2699_GTAProcess_roBeRPtYXK](https://github.com/Samuels-Development/sd-dongleped/assets/99494967/ccaa2ce0-53ea-4655-b855-d711a5d7b8f0)
 ![FiveM_b2699_GTAProcess_lYHEDGESkc](https://github.com/Samuels-Development/sd-dongleped/assets/99494967/f07a5371-67c3-4fbd-a979-c99cc5f89cec)
-
 
 Thanks for showing your personal interest in my work! 
 Please consider supporting ❤
