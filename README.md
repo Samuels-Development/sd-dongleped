@@ -5,7 +5,7 @@ Thanks for showing your personal interest in my work! Please consider supporting
 
 🔗 > https://discord.gg/samueldev 🔗 > https://fivem.samueldev.shop
 
-# Dependcies
+# Dependencies 
 - [sd_lib](https://github.com/Samuels-Development/sd_lib)
 - ox_lib
 - es_extended, qbx_core or qb-core.
