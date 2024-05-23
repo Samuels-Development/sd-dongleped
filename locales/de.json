@@ -1,0 +1,37 @@
+{
+  "menu": {
+    "available_robberies": "Verfügbare Raubüberfälle",
+    "close_esc": "Schließen (ESC)",
+    "practice_makes_perfect": "💥 Übung Macht den Meister! 💥",
+    "price_label": "Preis: {price}",
+    "buy_stuff": "Sachen Kaufen",
+    "available": "✔️ Verfügbar",
+    "not_available": "❌ Nicht Verfügbar",
+    "fleeca_banks": "Fleeca Banken",
+    "fleeca_banks_description": "Ein Netzwerk kleinerer Banken, die über die Stadt verstreut sind.",
+    "paleto_bank": "Paleto Bank",
+    "paleto_bank_description": "Eine größere Bank in der Stadt Paleto.",
+    "pacific_bank": "Pazifik Bank",
+    "pacific_bank_description": "Eine der größten Banken der Stadt mit hoher Sicherheit.",
+    "electronic_kit": "Elektronik-Kit",
+    "electronic_kit_description": "Für verschiedene elektronische Zwecke verwendet.",
+    "gate_crack": "Tor-Knacker",
+    "gate_crack_description": "Ein Werkzeug zum Knacken von Tor-Schlössern.",
+    "thermite": "Thermit",
+    "thermite_description": "Eine hochtemperaturbrennende Verbindung.",
+    "trojan_usb": "Trojanisches USB",
+    "trojan_usb_description": "Ein USB-Gerät für Hacking-Zwecke.",
+    "drill": "Bohrer",
+    "drill_description": "Ein Werkzeug zum Bohren von Löchern."
+  },
+  "target": {
+    "purchase_equipment": "Ausrüstung Kaufen",
+    "check_availability": "Verfügbarkeit Prüfen"
+  },
+  "notifications": {
+    "purchase_successful": "Kauf erfolgreich.",
+    "not_enough_money": "Nicht genug {currency}.",
+    "too_far_away": "Sie sind zu weit vom Interaktionspunkt entfernt.",
+    "unauthorized_distance_attempt": "Benutzer {id} hat versucht, {item_type} aus einer Entfernung von {distance} Einheiten vom Dongle Ped zu kaufen."
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "menu": {
+    "available_robberies": "Available Robberies",
+    "close_esc": "Close (ESC)",
+    "practice_makes_perfect": "Practice Makes Perfect!",
+    "price_label": "Price: {price}",
+    "buy_stuff": "Buy Stuff",
+    "fleeca_banks": "Fleeca Banks",
+    "fleeca_banks_description": "A network of smaller banks scattered throughout the city.",
+    "paleto_bank": "Paleto Bank",
+    "paleto_bank_description": "A larger bank located in the town of Paleto.",
+    "pacific_bank": "Pacific Bank",
+    "pacific_bank_description": "One of the largest banks in the city with high security.",
+    "electronic_kit": "Electronic Kit",
+    "electronic_kit_description": "Used for various electronic purposes.",
+    "gate_crack": "Gate Crack",
+    "gate_crack_description": "A tool to crack gate locks.",
+    "thermite": "Thermite",
+    "thermite_description": "A high-temperature burning compound.",
+    "trojan_usb": "Trojan USB",
+    "trojan_usb_description": "A USB device for hacking purposes.",
+    "drill": "Drill",
+    "drill_description": "A tool for drilling holes."
+  },
+  "target": {
+    "purchase_equipment": "Purchase Equipment",
+    "check_availability": "Check Availability"
+  },
+  "notifications": {
+    "purchase_successful": "Purchase successful.",
+    "not_enough_money": "Not enough {currency}.",
+    "too_far_away": "You are too far away from the interaction point.",
+    "unauthorized_distance_attempt": "User {id} attempted to purchase {item_type} from a distance of {distance} units away from the Dongle Ped."
+  }
+}

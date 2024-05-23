@@ -1,4 +1,42 @@
-local SD = exports['sd_lib']:getLib()
+local locale = SD.Locale.T
+
+-- Create Ped
+local CreatePedAtCoords = function(pedModel, coords)
+    local options = {
+        {
+            event = "sd-dongle:client:showRobberies",
+            icon = "fas fa-clock",
+            label = locale('target.check_availability'),
+            canInteract = function()
+                return true
+            end
+        },
+        {
+            event = "sd-dongle:client:buyItems",
+            icon = "fas fa-laptop-code",
+            label = locale('target.purchase_equipment'),
+            canInteract = function()
+                return true
+            end
+        }
+    }
+
+    local pedData = {
+        model = pedModel,
+        coords = coords,
+        scenario = "WORLD_HUMAN_STAND_IMPATIENT",
+        distance = 50,
+        debug = false,
+        targetOptions = {
+            options = options,
+            distance = 3.0
+        }
+    }
+
+    -- Create the ped at the point using the SD.Ped module
+    local point = SD.Ped.CreatePedAtPoint(pedData)
+    return point
+end
 
 -- Blip Creation
 CreateThread(function()
@@ -10,129 +48,95 @@ CreateThread(function()
         SetBlipAsShortRange(blip, true)
         SetBlipColour(blip, Config.Blip.Colour)
         BeginTextCommandSetBlipName("STRING")
-        AddTextComponentSubstringPlayerName(Config.Blip.Name)
+        AddTextComponentSubstringPlayerName(locale('menu.practice_makes_perfect'))
         EndTextCommandSetBlipName(blip)
     end
 end)
-
--- Create Ped
-function CreatePedAtCoords(pedModel, coords)
-    if type(pedModel) == "string" then pedModel = GetHashKey(pedModel) end
-	SD.utils.LoadModel(pedModel)
-    local ped = CreatePed(0, pedModel, coords.x, coords.y, coords.z, coords.w, false, false)
-    FreezeEntityPosition(ped, true)
-	TaskStartScenarioInPlace(ped, "WORLD_HUMAN_STAND_IMPATIENT", 0, true)
-    SetEntityVisible(ped, true)
-    SetEntityInvincible(ped, true)
-    PlaceObjectOnGroundProperly(ped)
-    SetBlockingOfNonTemporaryEvents(ped, true)
-
-	SD.target.AddTargetEntity(ped, {
-        options = {
-            { 
-                event = "sd-dongle:activity",
-                icon = "fas fa-clock",
-                label = "Check Availability",
-            },
-            {
-                event = "sd-dongle:buyitems",
-                icon = "fas fa-laptop-code",
-                label = "Purchase Equıpment",
-            },
-        },
-        distance = 3.0 
-    })
-
-	AddEventHandler("onResourceStop", function(resource)
-        if resource == GetCurrentResourceName() then
-            DeleteEntity(ped)
-        end
-    end)
-	
-    return ped
-end
 
 CreateThread(function()
     while not GlobalState.DonglePedLocation do Wait(0) end
     local ped = CreatePedAtCoords(Config.DonglePedModel, GlobalState.DonglePedLocation)
 end)
 
-RegisterNetEvent('sd-dongle:activity', function()
-    SD.ServerCallback("sd-dongleped:server:getCops", function(enoughCops)
-        local header = {
-            {
-                icon = "fa-solid fa-circle-info",
-                header = "Available Robberies",
-                params = {
-                    event = "",
-                }
-            }
-        }
+local ShowRobberies = function()
+
+    -- Define the function to create the menu options
+    local createOptions = function(enoughCops)
+        local options = {}
         for k, v in pairs(Config.RobberyList) do
-            if enoughCops >= v.minCops then
-                header[#header+1] = {
-                    header = v.Header,
-                    txt = "✔️ Available",
-                    icon = v.icon,
-                    params = {
-                        event = "",
-                    }
-                }
-            else
-                header[#header+1] = {
-                    header = v.Header,
-                    txt = "❌ Not Available",
-                    icon = v.icon,
-                    params = {
-                        event = "",
-                    }
-                }
-            end
-        end
-        header[#header+1] = {
-            header = "Close (ESC)",
-            icon = "fa-solid fa-angle-left",
-            params = {
-                event = "",
-            }
-        }
-
-        SD.menu.OpenMenuList(header)
-    end)
-end)
-
-RegisterNetEvent('sd-dongle:buyitems', function(data)
-    local header = {
-        {
-            icon = "fa-solid fa-circle-info",
-            header = "💥 Practice Makes Perfect! 💥"
-        }
-    }
-    
-    for k, v in pairs(Config.Shop) do
-        if v.label then 
-            header[#header+1] = {
-                header = v.label, 
-                txt = "Price: "..v.price,
+            table.insert(options, {
+                title = v.Header,
+                description = v.description,
                 icon = v.icon,
-                params = {
-                    event = "sd-dongle:client:buyStuff",
-                    args = k
-                }
-            }
+                disabled = enoughCops < v.minCops,
+                onSelect = function()
+                    TriggerEvent('sd-dongle:client:showRobberies')
+                end
+            })
         end
+        table.insert(options, {
+            title = locale('menu.close_esc'),
+            icon = 'fa-solid fa-angle-left',
+            onSelect = function()
+                lib.hideContext()
+            end
+        })
+        return options
     end
 
-    header[#header+1] = {
-        header = "Close (ESC)",
-        icon = "fa-solid fa-angle-left",
-        params = {
-            event = "",
-        }
-    }
+    -- Fetch data asynchronously and then show the context menu
+    SD.Callback('sd-dongle:server:getCops', false, function(enoughCops)
+        lib.registerContext({
+            id = 'robberies_menu',
+            title = locale('menu.available_robberies'),
+            canClose = true,
+            options = createOptions(enoughCops)
+        })
 
-    SD.menu.OpenMenuList(header)
-end)
+        lib.showContext('robberies_menu')
+    end)
+end
+
+RegisterNetEvent('sd-dongle:client:showRobberies', ShowRobberies)
+
+local OpenShop = function()
+
+    -- Define the function to create the menu options
+    local createOptions = function()
+        local options = {}
+        for k, v in pairs(Config.Shop) do
+            local randomPrice = v.price
+            table.insert(options, {
+                title = v.label,
+                description = v.description .. "\n" .. locale('menu.price_label', {price = tostring(randomPrice)}),
+                icon = v.icon,
+                onSelect = function()
+                    TriggerServerEvent('sd-dongle:server:buyStuff', k)
+                end
+            })
+        end
+        table.insert(options, {
+            title = locale('menu.close_esc'),
+            icon = 'fa-solid fa-angle-left',
+            onSelect = function()
+                lib.hideContext()
+            end
+        })
+        return options
+    end
+
+    -- Register and show the context menu with options
+    lib.registerContext({
+        id = 'buy_items_menu',
+        title = locale('menu.practice_makes_perfect'),
+        canClose = true,
+        options = createOptions()
+    })
+
+    lib.showContext('buy_items_menu')
+end
+
+RegisterNetEvent('sd-dongle:client:buyItems', OpenShop)
 
 RegisterNetEvent('sd-dongle:client:buyStuff', function(data)
     TriggerServerEvent('sd-dongle:server:buyStuff', data)

@@ -1,0 +1,37 @@
+{
+  "menu": {
+    "available_robberies": "Braquages Disponibles",
+    "close_esc": "Fermer (ESC)",
+    "practice_makes_perfect": "💥 La Pratique Rend Parfait! 💥",
+    "price_label": "Prix: {price}",
+    "buy_stuff": "Acheter des Choses",
+    "available": "✔️ Disponible",
+    "not_available": "❌ Non Disponible",
+    "fleeca_banks": "Banques Fleeca",
+    "fleeca_banks_description": "Un réseau de petites banques disséminées dans toute la ville.",
+    "paleto_bank": "Banque Paleto",
+    "paleto_bank_description": "Une grande banque située dans la ville de Paleto.",
+    "pacific_bank": "Banque Pacifique",
+    "pacific_bank_description": "Une des plus grandes banques de la ville avec une haute sécurité.",
+    "electronic_kit": "Kit Électronique",
+    "electronic_kit_description": "Utilisé pour divers usages électroniques.",
+    "gate_crack": "Crochet de Portail",
+    "gate_crack_description": "Un outil pour crocheter les serrures de portail.",
+    "thermite": "Thermite",
+    "thermite_description": "Un composé brûlant à haute température.",
+    "trojan_usb": "USB Trojan",
+    "trojan_usb_description": "Un périphérique USB pour le piratage.",
+    "drill": "Perceuse",
+    "drill_description": "Un outil pour percer des trous."
+  },
+  "target": {
+    "purchase_equipment": "Acheter de l'Équipement",
+    "check_availability": "Vérifier la Disponibilité"
+  },
+  "notifications": {
+    "purchase_successful": "Achat réussi.",
+    "not_enough_money": "Pas assez de {currency}.",
+    "too_far_away": "Vous êtes trop loin du point d'interaction.",
+    "unauthorized_distance_attempt": "L'utilisateur {id} a tenté d'acheter {item_type} à une distance de {distance} unités du Dongle Ped."
+  }
+}
