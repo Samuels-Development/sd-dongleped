@@ -1,4 +1,5 @@
 local DongleCoords = nil
+local locale = SD.Locale.T
 
 local BuyStuff = function(data)
     local src = source
